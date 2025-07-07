@@ -8,6 +8,8 @@
     --white: #FFFFFF;
     --white50: hsl(0, 0%, 50%);
     --black20: hsl(0, 0%, 20%);
+    --bg-white: #ffffff23;
+    --bg-input: #ffffff10;
 }
 
 body {
