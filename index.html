@@ -10,6 +10,7 @@
 </head>
 <body>
     <!-- first screen -->
+
     <section class="preload"></section>
     
     <!-- spinner -->
@@ -18,12 +19,106 @@
     </section>
     
     <!-- Login -->
+   
     <section class="hidden login sections"></section>
     
     <!-- area for register or password recovery -->
+   
     <section class="registration_password_recovery hidden sections"></section>
 
     <!-- new componente -->
+
+    <section class="sections display_area hidden">
+
+        <div class="container_display_area">
+
+            <div class="box_search">
+
+                <div class="box_user">
+                    <div class="box_img">
+                        <figure>
+                            <img src="https://www.pngmart.com/files/23/Profile-PNG-Photo.png">
+                        </figure>
+
+                        <p>Olá! <span id="name_user">Usuario</span></p>
+                    </div>
+
+                     <svg class="bell" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFF"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg>
+
+                </div>
+
+                <form>
+                    <label for="i_search" class="label">
+                        <svg class="ico_search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+
+                        <input type="text" placeholder="Search" autocomplete="off" id="i_search" class="input">
+                    </label>
+                </form>
+
+            </div>
+
+            <div class="cards">
+                <div class="coming_soon">
+                    <span class="sub_title">Em breve</span>
+
+                    <figure class="poster">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.eymcxG6LX-RoGOOjVV1gJwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="imagem de Filmes">
+
+                        <svg class="ico_play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+                    </figure>
+                </div>
+                
+                <div class="types_type">
+                    <span id="all">All</span>
+                    <span id="action">Action</span>
+                    <span id="comedy">Comedy</span>
+                    <span id="romance">Romance</span>
+                    <span id="fantasy">Fantasy</span>
+                    <span id="adventure">Adventure</span>
+                </div>
+
+                <div class="trending_now">
+                    <span class="sub_title">Tendências atuais</span>
+
+                    <div class="box_trending_now">
+                        <span class="card_left_right">
+                            <img src="https://tse2.mm.bing.net/th/id/OIP.eymcxG6LX-RoGOOjVV1gJwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" width="50px" alt="imagem de Filmes">
+                        </span>
+
+                        <span class="card_principal">
+                            <figure class="figure_card_principal">
+                                <img src="https://tse2.mm.bing.net/th/id/OIP.eymcxG6LX-RoGOOjVV1gJwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" width="50px" alt="imagem de Filmes">
+                            </figure>
+
+                            <div class="area_of_types">
+                                <span id="clafication">18+</span>
+                                <span id="type">Action</span>
+                                <span id="clafication_stars">
+                                    <svg class="ico_star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
+
+                                    <span class="cla_number">5.5</span>
+                                </span>
+                            </div>
+
+                            <span class="name_filme">Nome do Filmes</span>
+                        </span>
+                        <span class="card_left_right">
+                            <img src="https://tse2.mm.bing.net/th/id/OIP.eymcxG6LX-RoGOOjVV1gJwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" width="50px" alt="imagem de Filmes">
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="selection_types">
+                <span id="series">Series</span>
+                <span id="movies">Filmes</span>
+                <span id="my_list">Minha Lista</span>
+            </div>
+
+        </div>
+
+    </section>
 
     <script type="module" src="./src/js/scripts.js"></script>
 </body>
