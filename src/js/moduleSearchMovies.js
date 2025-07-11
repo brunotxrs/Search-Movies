@@ -9,32 +9,52 @@ export function searchMovie(){
     const typesSelections = document.getElementById('types_selections')
     const divSearch = document.createElement('div')
 
+
+    function stateElements(value){
+        if(value === false){
+            typesSelections.style.display = 'none'
+            containerCards.style.display = 'none'
+            states.spinner.classList.remove(states.class_hidden)    
+        }else if(value === true){
+            typesSelections.style.display = 'flex'
+            containerCards.style.display = 'flex'
+            states.spinner.classList.add(states.class_hidden)        
+        }else {
+            states.spinner.classList.remove(states.class_hidden)
+            divSearch.innerHTML = ''
+        }
+    }
+
+    input_search.addEventListener('input', () => {
+        stateElements(false)
+    })
+
+    stateElements(true)
+
     input_search.addEventListener('keyup', async(event) => {
        const searchItem  = input_search.value.trim();
 
        if(event.key === 'Enter'){
-
+            stateElements(false)
             const inputValue  = input_search.value.trim();
-            states.spinner.classList.remove(states.class_hidden)
-            typesSelections.style.display = 'none'
-            containerCards.style.display = 'none'
-                            
-            setTimeout(() => {
-                states.spinner.classList.add(states.class_hidden)
-            }, 1000)
-
-            setTimeout(() => {
-
-            }, 2000)
 
             if(inputValue){
+                stateElements(false)
+
+                setTimeout(() => {
+                    states.spinner.classList.add(states.class_hidden)
+                }, 1000)
+
+                setTimeout(() => {
+
+                }, 1500)
+
                 try {
                     const searchResults = await searchMovies(searchItem);
 
                     if(searchResults.results && searchResults.results.length > 0) {
                     
                         searchResults.results.forEach(movie => {
-                            console.log('titulo', movie.title)
                             const movieElement = document.createElement('div');
                             // movieElement.classList.add('card_left_right');
                             // (${movie.release_date ? movie.release_date.substring(0, 4) : 'N/A'})
@@ -51,9 +71,7 @@ export function searchMovie(){
                             setTimeout(() => {
                                 boxSearch.appendChild(divSearch);
                             }, 2000)
-
-
-                            
+                           
                         })
                         
                     }
@@ -67,14 +85,19 @@ export function searchMovie(){
         }
 
        if(event.key === 'Backspace'){
-            states.spinner.classList.remove(states.class_hidden)
-            divSearch.innerHTML = ''
+            const inputValue  = input_search.value.trim();
+            stateElements()
+
+            if(inputValue == ''){
+                console.log('Debug')
+                divSearch.innerHTML = ''               
+
+            }
+
 
             setTimeout(() => {
-                states.spinner.classList.add(states.class_hidden)
-                typesSelections.style.display = 'flex'
-                containerCards.style.display = 'flex'
-                
+                stateElements(true)
+
             }, 2000)
             
             
