@@ -1,5 +1,5 @@
-import { moviesPage } from './movies.js';
+import {  initializePageMovies  } from './moviesScreens.js'
 
 
 
-document.addEventListener('DOMContentLoaded', moviesPage)
+document.addEventListener('DOMContentLoaded', initializePageMovies)
