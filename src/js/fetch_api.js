@@ -7,9 +7,10 @@ const options = {
 };
 
 // here for use data of posters
-const urlApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc`
 
 async function fetchApi() {
+    const urlApi = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc`
+   
     try {
         const response = await fetch(urlApi, options);
 
@@ -43,9 +44,9 @@ const dataJson = (async () => {
 // ----------------------------------
 
 // here for use genre of movies
-const genreListUrl = 'https://api.themoviedb.org/3/genre/movie/list?language=pt-BR';
-
 async function fetchGenreList(){
+    const genreListUrl = 'https://api.themoviedb.org/3/genre/movie/list?language=pt-BR';
+
     try {
         const response = await fetch(genreListUrl, options);
 
@@ -108,14 +109,38 @@ async function fetchMovieCertification(movieId, countryCode = 'BR'){
     }
 }
 
-
 // -----------------------------------------------
 
+// function of fetch for search movie
+async function searchMovies(query, page = 1) {
+    const urlSearch = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&include_adult=false&language=pt-BR&page=${page}`;
+
+    try {
+        const response = await fetch(urlSearch, options);
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data  = await response.json()
+        return data
+
+    } catch (error) {
+        console.error(`Error searching movies for "${query}":`, error);
+        throw error;
+    }
+
+}
+
+
+// -------------------------------------
 const genresPromise = dataGenreListJson;
 const jsonData = dataJson;
 
 export {
     jsonData,
     genresPromise,
-    fetchMovieCertification
+    fetchMovieCertification,
+    searchMovies
 }
