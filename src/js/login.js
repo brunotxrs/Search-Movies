@@ -1,6 +1,7 @@
 import {  states  } from './states.js';
 import  { registrationPasswordRecovery  } from './registration_password_recovery.js';
 
+const moviesPage = './src/html/movies.html'
 
 function loginHtml(){
     const htmlLogin = `
@@ -149,18 +150,16 @@ function pageLogin(){
 
             setTimeout(() => {
                 states.spinner.classList.add(states.class_hidden);
-                
-                
+                                
                 nomeAtual = i_name.value.trim();
                 if(nomeAtual != ''){
-                    // salvando o nome do user
-                    localStorage.setItem('Name Test', nomeAtual);
-                    // DEBUG
-                    console.log("DEBUG", nomeAtual)
+                    // saving name of user
+                    localStorage.setItem('name_Actual', nomeAtual);
+                    
                 }
 
-                // chamada aqui do proximo componente
-                console.log('chamada aqui do proximo componente')  
+                // call here page for movies and others
+                window.location.href = moviesPage
                 
 
                 return nomeAtual
