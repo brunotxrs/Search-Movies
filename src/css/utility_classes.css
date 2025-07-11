@@ -200,16 +200,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    transform: translateY(0.8125rem);
 
-    .figure_card_principal {
-
-        img {
-            width: 12.5rem;
-            height: 100%;
-            border-radius: 0.625rem;
-            
-        }
-
+     img {
+        width: 12.5rem;
+        height: 100%;
+        border-radius: 0.625rem;
+        transition: 155ms;
+        box-shadow: 0rem 0rem 0.625rem #000;
     }
 
 
@@ -237,10 +235,18 @@
 
         }
 
+        #type {
+            width: 7.9375rem;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+
     }
 
     .name_filme {
         padding: 0.3125rem 0 0 0;
+        text-align: center;
     }
 }
 
