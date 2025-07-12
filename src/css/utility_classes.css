@@ -236,8 +236,8 @@
 
         }
 
-        #type {
-            width: 7.9375rem;
+        .movie-genre {
+            width: 8rem;
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
@@ -332,6 +332,39 @@
     }
 }
 
+.load_spinner, .load_spinner:before, .load_spinner:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.8s infinite ease-in-out;
+}
+.load_spinner {
+  color: var(--secondary);
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+.load_spinner:before,
+.load_spinner:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.load_spinner:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+.load_spinner:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
+  40% { box-shadow: 0 2.5em 0 0 }
+}
 
 @media screen and (width > 48rem ) {
     .sub_title {
