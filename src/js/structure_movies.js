@@ -42,11 +42,25 @@ export function htmlMovie() {
                 
                 <div class="types_type">
                     <span id="all">All</span>
-                    <span id="action">Action</span>
-                    <span id="comedy">Comedy</span>
+                    <span id="action">Ação</span>
+                    <span id="adventure">Aventura</span>
+                    <span id="animation">Animação</span>
+                    <span id="comedy">Comédia</span>
+                    <span id="crime">Crime</span>
+                    <span id="documentary">Documentário</span>
+                    <span id="drama">Drama</span>
+                    <span id="family">Família</span>
+                    <span id="fantasy">Fantasia</span>
+                    <span id="history">História</span>
+                    <span id="horror">Terror</span>
+                    <span id="music">Música</span>
+                    <span id="mystery">Mistério</span>
                     <span id="romance">Romance</span>
-                    <span id="fantasy">Fantasy</span>
-                    <span id="adventure">Adventure</span>
+                    <span id="science-fiction">Ficção científica</span>
+                    <span id="tv-movie">Cinema TV</span>
+                    <span id="thriller">Thriller</span>
+                    <span id="war">Guerra</span>
+                    <span id="western">Faroeste</span>                   
                 </div>
 
                 <div class="trending_now">
