@@ -51,7 +51,6 @@ export async function trendingNow(filterType = 'all') {
             if (selectedGenreId) {
                 const genreMoviesData = await fetchMoviesByGenre(selectedGenreId);
                 moviesToDisplay = genreMoviesData.results;
-                console.log(`Exibindo filmes do gênero: ${filterType} (ID: ${selectedGenreId}). Total: ${moviesToDisplay.length}`);
             } else {
                 console.warn(`Gênero "${filterType}" não encontrado. Exibindo todos os filmes como fallback.`);
                 const moviesData = await jsonData;
