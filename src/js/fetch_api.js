@@ -78,7 +78,8 @@ const dataGenreListJson = (async () => {
  
 // -------------------------------------
 
-// here for use the classification of movie
+// here for u
+// se the classification of movie
 async function fetchMovieCertification(movieId, countryCode = 'BR'){
 
     const urlClassification = `https://api.themoviedb.org/3/movie/${movieId}/release_dates`;
@@ -133,6 +134,26 @@ async function searchMovies(query, page = 1) {
 
 }
 
+// function for search by genres
+async function fetchMoviesByGenre(genreId, page = 1) {
+    const url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=pt-BR&sort_by=popularity.desc&page=${page}`;
+
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    }
+}
+
 
 // -------------------------------------
 const genresPromise = dataGenreListJson;
@@ -142,5 +163,6 @@ export {
     jsonData,
     genresPromise,
     fetchMovieCertification,
-    searchMovies
+    searchMovies,
+    fetchMoviesByGenre
 }
