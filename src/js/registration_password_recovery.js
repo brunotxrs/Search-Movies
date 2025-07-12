@@ -1,6 +1,8 @@
 import { states } from "./states.js";
 import {  preload  } from './preload.js';
 
+const moviesPage = './src/html/movies.html'
+
 function structureHtml(i){
 
     const htmlRegistrationPasswordRecovery = `
@@ -84,10 +86,11 @@ function register(r){
         })
 
 
-        // aqui ira ser chamado a area do filmes
+        // here  call area of movies
         const i_button_rpr = document.getElementById('i_button_rpr')
         i_button_rpr.addEventListener('click', () => {
-            console.log('chamada pra outra pagina')
+            window.location.href = moviesPage
+
         })
 
         
