@@ -1,122 +1,155 @@
-import {  jsonData, genresPromise, fetchMovieCertification  } from './fetch_api.js';
+import {  jsonData, genresPromise, fetchMovieCertification, fetchMoviesByGenre  } from './fetch_api.js';
 import { states } from './states.js';
 
-const typesGenres = (async () => {
+const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+
+let genreMapCache = null;
+
+const getGenreMap = async () => {
+    if (genreMapCache) {
+        return genreMapCache;
+    }
+    try {
+        const ge = await genresPromise;
+        const map = new Map();
+        if (ge && ge.genres) {
+            ge.genres.forEach(genre => {
+                map.set(genre.id, genre.name);
+            });
+        }
+        genreMapCache = map;
+        return map;
+    } catch (error) {
+        console.error('Erro ao carregar gêneros:', error);
+        return null;
+    }
+};
+
+export async function trendingNow(filterType = 'all') {
+    const cardsHtml = document.getElementById('cards')
+    if (!cardsHtml) {
+        console.error('Elemento #cards não encontrado.');
+        return;
+    }
+    cardsHtml.innerHTML = '';
+
+    const genreMap = await getGenreMap();
+    let moviesToDisplay = [];
 
     try {
-        const data = await genresPromise
-        return data
+
+        if (filterType === 'all') {
+            const moviesData = await jsonData;
+            moviesToDisplay = moviesData.results;
+        
+        }else {
+            const selectedGenreId = Array.from(genreMap.entries())
+                                        .find(([id, name]) => name.toLowerCase() === filterType.toLowerCase())
+                                        ?.['0'];
+
+
+            if (selectedGenreId) {
+                const genreMoviesData = await fetchMoviesByGenre(selectedGenreId);
+                moviesToDisplay = genreMoviesData.results;
+                console.log(`Exibindo filmes do gênero: ${filterType} (ID: ${selectedGenreId}). Total: ${moviesToDisplay.length}`);
+            } else {
+                console.warn(`Gênero "${filterType}" não encontrado. Exibindo todos os filmes como fallback.`);
+                const moviesData = await jsonData;
+                moviesToDisplay = moviesData.results;
+            }
+
+        }
+
+        if (moviesToDisplay.length === 0) {
+            cardsHtml.innerHTML = '<p>Nenhum filme encontrado para esta seleção.</p>';
+            return;
+        }
+
+
+        const classificationPromises = moviesToDisplay.map(movie => 
+            fetchMovieCertification(movie.id, 'BR')
+        );
+        const allClassifications = await Promise.all(classificationPromises);
+
+        moviesToDisplay.forEach((element, index) => {
+            const imagePath = element.poster_path;
+            const imageUrl = `${TMDB_IMAGE_BASE_URL}${imagePath}`;
+            
+            let movieGenreName = (filterType === 'all' && element.genre_ids && element.genre_ids.length > 0)
+                           ? (genreMap.get(element.genre_ids[0]) || 'Desconhecido')
+                           : filterType;
+
+            const movieClassification = allClassifications[index];
+            const classificationText = movieClassification ? `${movieClassification}+` : '+'; // Se vazio, coloca só '+'
+
+            const details = `
+                <span class="card_left_right" id="card_id_${index}">
+                    <img src="${imageUrl}" alt="${element.title}">
+
+                    <div class="area_of_types ${states.class_hidden}">
+                        <span class="classifications">${classificationText}</span> 
+                        <span class="movie-genre">${movieGenreName}</span> 
+                        <span class="classification_stars">
+                            <svg class="ico_star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
+                            <span class="cla_number">${element.vote_average.toFixed(1)}</span>
+                        </span>
+                    </div>
+
+                    <span class="name_filme ${states.class_hidden}" id="name_filme_${index}">${element.title}</span>
+                </span>
+            `;
+            cardsHtml.innerHTML += details;
+        });
+
+        const classificationElements = document.querySelectorAll('.classifications');
+        classificationElements.forEach(e => {
+            if(e.textContent.trim() === '+'){ 
+                e.style.display = 'none';   
+            }
+        });
+
+
+        applyCardHoverEffects();
         
     } catch (error) {
-        console.error('erro nessa porra', error);
-        return null;    
+        console.error('Erro ao exibir filmes filtrados:', error);
+        cardsHtml.innerHTML = '<p>Ocorreu um erro ao carregar os filmes. Tente novamente mais tarde.</p>';
     }
-})()
 
-// function for add card for movies and your small details
-export async function trendingNow() {
-    const movies = await jsonData;
-    const ge = await typesGenres
-
-    const genreMap = new Map();
-    if (ge && ge.genres) {
-        ge.genres.forEach(genre => {
-            genreMap.set(genre.id, genre.name);
+    function applyCardHoverEffects() {
+        const cardsMovies = document.querySelectorAll('.card_left_right');
+        cardsMovies.forEach((cardElement) => {
+            cardElement.addEventListener('mouseover', () => {
+                cardElement.classList.remove('card_left_right');
+                cardElement.classList.add('card_principal');
+                
+                const nameElement = cardElement.querySelector('.name_filme');
+                if (nameElement) {
+                    nameElement.classList.remove(states.class_hidden);
+                }
+                
+                const areaOfTypesElement = cardElement.querySelector('.area_of_types');
+                if (areaOfTypesElement) {
+                    areaOfTypesElement.classList.remove(states.class_hidden);
+                }
+            });
+            
+            cardElement.addEventListener('mouseout', () => {
+                cardElement.classList.add('card_left_right');
+                cardElement.classList.remove('card_principal');
+                
+                const areaOfTypesElement = cardElement.querySelector('.area_of_types');
+                if (areaOfTypesElement) {
+                    areaOfTypesElement.classList.add(states.class_hidden);
+                }
+                
+                const nameElement = cardElement.querySelector('.name_filme');
+                if (nameElement) {
+                    nameElement.classList.add(states.class_hidden);
+                }
+            });
         });
     }
     
-    
-    const moviesArray = movies.results;
-
-    const cardsHtml = document.getElementById('cards')
-    cardsHtml.innerHTML = ''
-    
-    const classificationPromises = moviesArray.map(movie => 
-        fetchMovieCertification(movie.id, 'BR')
-    );
-    const allClassifications = await Promise.all(classificationPromises);
-
-    movies.results.forEach((element, index) => {
-        
-        const i = element.poster_path
-        const imagePath = i;
-        const imageUrl = `https://image.tmdb.org/t/p/w500${imagePath}`;
-
-        let movieGenreNames = 'Gênero Desconhecido'; // Valor padrão
-
-        if (element.genre_ids && element.genre_ids.length > 0) {
-            const firstGenreId = element.genre_ids[0]; // Pega o ID do primeiro gênero
-            movieGenreNames = genreMap.get(firstGenreId) || 'Desconhecido'; // Busca o nome no mapa
-        }
-
-        const movieClassification = allClassifications[index];
-
-        const details = `
-            <span class="card_left_right">
-                <img src=${imageUrl} alt="${element.title}">
-
-                <div class="area_of_types ${states.class_hidden}">
-                    <span class="classifications">${movieClassification}+</span>
-                    <span id="type">${movieGenreNames}</span>
-                    <span id="classification_stars">
-                        <svg class="ico_star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
-
-                        <span class="cla_number">${element.vote_average.toFixed(1)}</span>
-                    </span>
-                </div>
-
-                <span class="name_filme ${states.class_hidden}" id="i_name${index}">${element.title}</span>
-            </span>
-        `        
-        cardsHtml.innerHTML += details
-
-    });
-
-
-    // here apply display none for element empty
-    const classification = document.querySelectorAll('.classifications');
-    classification.forEach(e => {
-        if(e.innerHTML === '+'){
-            e.style.display = 'none'   
-        }
-    });
-
-    const cardsMovies = document.querySelectorAll('.card_left_right')
-    cardsMovies.forEach((e, i) => {
-        e.setAttribute('id', `id_cards${i}`)
-        const idCards = document.getElementById(`id_cards${i}`);
-        
-        
-
-        idCards.addEventListener('mouseover', () => {
-            idCards.classList.remove('card_left_right');
-            idCards.classList.add('card_principal');
-            const i_name = document.getElementById(`i_name${i}`)
-            i_name.classList.remove(states.class_hidden)
-            
-
-            if(idCards[i] <= 0 && idCards[i] >= 0 ) {
-                const areaOfTypes = document.querySelector('.area_of_types');
-                areaOfTypes.classList.remove(states.class_hidden)  
-
-            }
-
-        })
-        
-
-
-        idCards.addEventListener('mouseout', () => {
-            idCards.classList.add('card_left_right');
-            idCards.classList.remove('card_principal')
-            const areaOfTypes = document.querySelector('.area_of_types');
-            areaOfTypes.classList.add(states.class_hidden)
-            const i_name = document.getElementById(`i_name${i}`)
-            i_name.classList.add(states.class_hidden)
-            
-
-        })
-
-        
-    });
     
 }
