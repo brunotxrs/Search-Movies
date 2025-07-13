@@ -3,7 +3,13 @@ import {  states  } from './states.js';
 const nameUser = localStorage.getItem('name_Actual');
 
 export function htmlMovie() {
-    states.display_area.classList.remove(states.class_hidden);
+    states.spinner.classList.remove(states.class_hidden)
+    
+    setTimeout(() => {
+        states.spinner.classList.add(states.class_hidden)
+        
+        states.display_area.classList.remove(states.class_hidden);
+    },1000)
     // add all elements of API
 
     const cardsHtml = `
@@ -45,8 +51,9 @@ export function htmlMovie() {
 
                 <div class="trending_now">
                     <span class="sub_title">Tendências atuais</span>
-                    <div class="box_trending_now" id="cards">
-                    </div>
+                    <button class="scroll-button left-arrow">←</button>
+                    <div class="box_trending_now" id="cards"></div>
+                    <button class="scroll-button right-arrow">→</button>
                 </div>
 
             </div>
