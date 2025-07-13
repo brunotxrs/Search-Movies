@@ -7,13 +7,14 @@ const containerCards = document.getElementById('container_cards')
 const typesSelections = document.getElementById('types_selections')
 const divSearch = document.createElement('div')
 
-
+const p = document.createElement('p')
+p.setAttribute('class', 'msg_info')
 async function resultsSearch(searchItem){
     try {
         const searchResults = await searchMovies(searchItem);
 
         if(searchResults.results && searchResults.results.length > 0) {
-        
+            p.style.display = 'none'
             searchResults.results.forEach(movie => {
                 const movieElement = document.createElement('div');
                 
@@ -32,6 +33,12 @@ async function resultsSearch(searchItem){
                 
             })
             
+        }else {
+            p.textContent = 'Nenhum filme encontrado.'            
+            boxSearch.appendChild(p)
+            p.style.display = 'flex'
+            divSearch.innerHTML = ''
+            
         }
 
         
@@ -41,56 +48,53 @@ async function resultsSearch(searchItem){
 
 }
 
+function stateElements(value){
+    if(value === false){
+        typesSelections.style.display = 'none'
+        containerCards.style.display = 'none'
+        states.spinner.classList.remove(states.class_hidden)    
+    }else if(value === true){
+        divSearch.innerHTML = '';
+        divSearch.style.display = 'none'
+        typesSelections.style.display = 'flex'
+        containerCards.style.display = 'flex'
+        states.spinner.classList.add(states.class_hidden)
+        p.style.display = 'none'        
+    }else {
+        states.spinner.classList.add(states.class_hidden)
+        divSearch.innerHTML = ''
+        p.style.display = 'none'
+    }
+}
+
 // function for search movies.
 export function searchMovie(){
-    
-    function stateElements(value){
-        if(value === false){
-            typesSelections.style.display = 'none'
-            containerCards.style.display = 'none'
-            states.spinner.classList.remove(states.class_hidden)    
-        }else if(value === true){
-            typesSelections.style.display = 'flex'
-            containerCards.style.display = 'flex'
-            states.spinner.classList.add(states.class_hidden)        
-        }else {
-            states.spinner.classList.add(states.class_hidden)
-            divSearch.innerHTML = ''
-        }
-    }
+    const inputValue = input_search.value.trim()     
 
-    
-    input_search.addEventListener('input', () => {
-        const inputValue = input_search.value.trim()
+    input_search.addEventListener('keyup', async(event) => {
+        const searchItem  = input_search.value.trim();
 
-        if(inputValue.length > 0){
+        if(searchItem.length > 0){
 
-            if(inputValue){
-                input_search.addEventListener('keyup', async(event) => {
-                    const searchItem  = input_search.value.trim();
+            if(event.key === 'Enter'){
+                divSearch.innerHTML = ''
+                stateElements(false)
 
-                    if(searchItem.length > 0){
-                        
-                        if(event.key === 'Enter'){
-                            stateElements(false)
+                setTimeout(() => {
+                    states.spinner.classList.add(states.class_hidden)
 
-                            setTimeout(() => {
-                                states.spinner.classList.add(states.class_hidden)
-                            }, 1000)
-                            resultsSearch(searchItem)
-                            
-                        } else if(event.key === 'Backspace'){
-                            stateElements()     
-                        }
-                    }
-
-                })
-
+                }, 1000)  
+                divSearch.style.display = 'grid'            
+                resultsSearch(searchItem)
+                
+            } else if(event.key === 'Backspace' && searchItem.length === 0){
+                stateElements()
+            } else {
+                stateElements(true);
             }
-            
-        }else {
+
+        }else if(inputValue.length === 0 && input_search.value.trim() === 0 || input_search.value.trim() === ''){
             stateElements(true);
-            divSearch.innerHTML = ''; 
         }
 
     })
