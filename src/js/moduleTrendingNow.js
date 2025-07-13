@@ -1,6 +1,9 @@
 import {  jsonData, genresPromise, fetchMovieCertification, fetchMoviesByGenre  } from './fetch_api.js';
 import { states } from './states.js';
 
+const leftArrow = document.querySelector('.left-arrow');
+const rightArrow = document.querySelector('.right-arrow');
+const trendingNowContainer = document.getElementById('cards')
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 let genreMapCache = null;
@@ -24,6 +27,48 @@ const getGenreMap = async () => {
         return null;
     }
 };
+
+function scrollLeftAndRight() {
+    function updateArrowVisibility() {
+        if (trendingNowContainer.scrollWidth <= trendingNowContainer.clientWidth) {
+            leftArrow.style.display = 'none';
+            rightArrow.style.display = 'block';
+        } else {
+            
+            if (trendingNowContainer.scrollLeft === 0) {
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'block';
+            } else {
+                leftArrow.style.display = 'block'; 
+            }
+
+            const maxScrollLeft = trendingNowContainer.scrollWidth - trendingNowContainer.clientWidth;
+            if (trendingNowContainer.scrollLeft >= maxScrollLeft - 2) {
+                rightArrow.style.display = 'none';
+            } else {
+                rightArrow.style.display = 'block';
+            }
+        }
+    }
+
+    leftArrow.addEventListener('click', () => {
+        trendingNowContainer.scrollLeft -= 200;
+    });
+
+    rightArrow.addEventListener('click', () => {
+        trendingNowContainer.scrollLeft += 200;
+    });
+
+    trendingNowContainer.addEventListener('scroll', updateArrowVisibility);
+
+    requestAnimationFrame(() => {
+        updateArrowVisibility();
+    });
+
+    
+}
+
+scrollLeftAndRight()
 
 export async function trendingNow(filterType = 'all') {
     const cardsHtml = document.getElementById('cards')
