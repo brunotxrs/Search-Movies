@@ -149,7 +149,7 @@ function pageLogin(){
             cleanLoginHtmlAndAddSpinner();
 
             setTimeout(() => {
-                states.spinner.classList.add(states.class_hidden);
+                // if has problem with spinner add the state.spinner here
                                 
                 nomeAtual = i_name.value.trim();
                 if(nomeAtual != ''){
