@@ -154,6 +154,40 @@ async function fetchMoviesByGenre(genreId, page = 1) {
     }
 }
 
+// -------------------------------------------
+const BASE_URL = `https://api.themoviedb.org/3/`
+async function fetchMovieDetails(movieId, language = 'pt-BR'){
+    
+    const urlDetails = `${BASE_URL}/movie/${movieId}?language=${language}&append_to_response=credits,release_dates`;
+
+    try {
+        const response = await fetch(urlDetails, options);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+
+        const brCertification = data.release_dates?.results.find(
+            result => result.iso_3166_1 === 'BR'
+        )?.release_dates.find(
+            date => date.certification !== '' && date.type === 3
+        )?.certification || '';
+
+        data.brazil_certification = brCertification; // Adiciona ao objeto retornado
+
+        return data; // Retorna o objeto completo do filme
+
+
+        
+    } catch (error) {
+        console.error(`Erro ao buscar detalhes do filme ${movieId}:`, error);
+        throw error;
+    }
+}
+
 
 // -------------------------------------
 const genresPromise = dataGenreListJson;
@@ -164,5 +198,6 @@ export {
     genresPromise,
     fetchMovieCertification,
     searchMovies,
-    fetchMoviesByGenre
+    fetchMoviesByGenre,
+    fetchMovieDetails
 }
