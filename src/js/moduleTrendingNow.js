@@ -1,4 +1,5 @@
 import {  jsonData, genresPromise, fetchMovieCertification, fetchMoviesByGenre  } from './fetch_api.js';
+import { detailsMovies } from './moduleDetailsMovies.js';
 import { states } from './states.js';
 
 const leftArrow = document.querySelector('.left-arrow');
@@ -160,6 +161,40 @@ export async function trendingNow(filterType = 'all') {
         cardsHtml.innerHTML = '<p>Ocorreu um erro ao carregar os filmes. Tente novamente mais tarde.</p>';
     }
 
+    // function for exhibition of details of movies
+    function clickCards(){
+        moviesToDisplay.forEach((e, i) => {
+            const cardsHandleClick = document.getElementById(`card_id_${i}`)
+            const carsId = e.id
+            
+            
+
+            cardsHandleClick.onclick = function(){
+                handleClick()
+            }
+
+            function handleClick(){
+                cardsHandleClick.classList.add('card_principal')
+            }
+
+            cardsHandleClick.ondblclick = function(){
+                handleDubleClick()
+            }
+
+            function handleDubleClick(){
+                const displayArea = document.querySelector('.display_area')
+                // displayArea.innerHTML = ''
+                displayArea.classList.add(states.class_hidden)
+                detailsMovies(carsId)
+                console.log(carsId)
+            }
+
+        })
+
+    }
+    // call function
+    clickCards()
+
     function applyCardHoverEffects() {
         const cardsMovies = document.querySelectorAll('.card_left_right');
         cardsMovies.forEach((cardElement) => {
@@ -176,6 +211,8 @@ export async function trendingNow(filterType = 'all') {
                 if (areaOfTypesElement) {
                     areaOfTypesElement.classList.remove(states.class_hidden);
                 }
+
+
             });
             
             cardElement.addEventListener('mouseout', () => {
@@ -192,7 +229,9 @@ export async function trendingNow(filterType = 'all') {
                     nameElement.classList.add(states.class_hidden);
                 }
             });
+
         });
+
     }
     
     
