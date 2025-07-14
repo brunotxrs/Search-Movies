@@ -1,0 +1,271 @@
+#detailsMovies {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0) 100% 
+    );
+
+    justify-content: flex-start;
+    height: 100%;
+
+
+    .box-img {
+        position: relative;
+        height: 50vh;
+        width: 100%;
+
+        .ico_arrow_back {
+            position: absolute;
+            width: 1.875rem;
+            fill: var(--secondary);
+            top: 0.9375rem;
+            left: 0.125rem;
+            background: var(--primary);
+            border-radius: 0.3125rem;
+            z-index: 2;
+        }
+
+        img {
+           width: 100%;
+           height: 100%;
+           /* object-fit: cover; */
+           display: block;
+           
+        }
+
+    }
+
+    .box-img::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0) 100% 
+        );
+        
+        pointer-events: none;
+    }
+
+    .info_Movie {
+    	width: 100%;
+    	height: 5rem;
+    	display: flex;
+    	flex-direction: column;
+    	align-items: center;
+
+        div:nth-child(1){
+            display: flex;
+		    flex-direction: row;
+    		width: 100%;
+    		height: 100%;
+    		justify-content: space-evenly;
+    		align-items: center;
+
+            
+        }
+
+        div:nth-child(1) > span:nth-child(1), span:nth-child(3) {
+            display: flex;
+            gap: 0.3125rem;
+            background: 
+            var(--bg-white);
+            padding: 0.125rem 0.3125rem;
+            border-radius: 0.3125rem;
+            outline: none;
+            align-items: center;
+
+            .ico_star {
+                width: 1.25rem;
+                height: 100%;
+                /* padding: 0.25rem; */
+            }
+            
+        }
+
+        div:nth-child(1) > span:nth-child(2) {
+            display: flex;
+            gap: 0.3125rem;
+            
+            span {
+                background: 
+                var(--bg-white);
+                padding: 0.125rem 0.3125rem;
+                border-radius: 0.3125rem;
+            }
+            
+        }
+
+        div:nth-child(2){
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            gap: 0.625rem;
+            padding-right: 0.625rem;
+
+            span {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                svg {
+                    fill: var(--secondary);
+                }
+            }
+        }
+
+
+    }
+
+}
+
+@media screen and (width > 48rem) {
+    #detailsMovies {
+        position: relative;
+        overflow: initial;
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 1) 50%,
+            rgba(0, 0, 0, 0) 100% 
+        );
+
+        justify-content: flex-start;
+        height: 100%;
+
+        .box-img {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+
+            .ico_arrow_back {
+                position: absolute;
+                width: 1.875rem;
+                fill: var(--secondary);
+                top: 0.9375rem;
+                left: 0.625rem;
+                background: var(--primary);
+                border-radius: 0.3125rem;
+                z-index: 2;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                object-position: center;
+                
+            
+            }
+
+        }
+
+        .box-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.9) 0%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.8) 100% 
+            );
+            
+            pointer-events: none;
+        }
+
+        .info_Movie {
+            position: absolute;
+            top: calc(100vh - 95vh);
+            z-index: 10;
+            width: 100vw;
+            max-width: 80rem;
+            height: 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            div:nth-child(1){
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 100%;
+                justify-content: right;
+                align-items: center;
+                gap: 1.875rem;
+                padding-right: 0.9375rem;
+            }
+
+            div:nth-child(1) > span:nth-child(1), span:nth-child(3) {
+                display: flex;
+                gap: 0.3125rem;
+                background: 
+                var(--bg-white);
+                padding: 0.125rem 0.3125rem;
+                border-radius: 0.3125rem;
+                outline: none;
+                align-items: center;
+
+                .ico_star {
+                    width: 1.25rem;
+                    height: 100%;
+                }
+                
+            }
+
+            div:nth-child(1) > span:nth-child(2) {
+                display: flex;
+                gap: 0.3125rem;
+                
+                span {
+                    background: 
+                    var(--bg-white);
+                    padding: 0.125rem 0.3125rem;
+                    border-radius: 0.3125rem;
+                }
+                
+            }
+
+            div:nth-child(2){
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: right;
+                gap: 0.625rem;
+                padding-right: 0.625rem;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+
+                    svg {
+                        fill: var(--secondary);
+                    }
+                }
+            }
+
+
+        }
+
+    }
+}
