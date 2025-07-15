@@ -1,4 +1,4 @@
-import {  htmlMovie  } from './structure_movies.js';
+import {  structureOfPages  } from './structure_of_pages.js';
 import {  jsonData,} from './fetch_api.js';
 
 // for recept all promises 
@@ -9,7 +9,7 @@ async function datas(){
 
 }
 
-htmlMovie()
+structureOfPages()
 
 function createSVG(){
     const urlSvg = `http://www.w3.org/2000/svg`;
