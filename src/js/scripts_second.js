@@ -1,4 +1,4 @@
-import {  initializePageMovies  } from './moviesScreens.js'
+import {  initializePageMovies  } from './moviesScreens.js';
 
 
 
