@@ -1,4 +1,4 @@
-#detailsMovies {
+#detailsMovies, #detailsTv {
     user-select: none;
     position: relative;
     overflow: hidden;
@@ -203,7 +203,7 @@
 }
 
 @media screen and (width > 48rem) {
-    #detailsMovies {
+    #detailsMovies, #detailsTv {
         position: relative;
         overflow: initial;
         background: linear-gradient(
