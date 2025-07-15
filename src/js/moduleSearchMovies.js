@@ -1,11 +1,14 @@
 import { searchMovies  } from './fetch_api.js';
 import { states } from './states.js';
+import { detailsMovies } from './moduleDetailsMovies.js';
 
-const input_search = document.getElementById('input_search')
-const boxSearch = document.getElementById('search_box')
-const containerCards = document.getElementById('container_cards')
-const typesSelections = document.getElementById('types_selections')
-const divSearch = document.createElement('div')
+const input_search = document.getElementById('input_search');
+const boxSearch = document.getElementById('search_box');
+const divSearch = document.createElement('div');
+divSearch.classList.add('containerSearchMovies');
+boxSearch.appendChild(divSearch);
+const containerCards = document.getElementById('container_cards');
+const typesSelections = document.getElementById('types_selections');
 
 const p = document.createElement('p')
 p.setAttribute('class', 'msg_info')
@@ -17,6 +20,7 @@ async function resultsSearch(searchItem){
             p.style.display = 'none'
             searchResults.results.forEach(movie => {
                 const movieElement = document.createElement('div');
+                movieElement.setAttribute('id', `movie_card_index_${movie.id}`)
                 
 
                 movieElement.innerHTML = `
@@ -24,12 +28,26 @@ async function resultsSearch(searchItem){
                     ${movie.poster_path ? `<img src="https://image.tmdb.org/t/p/w92${movie.poster_path}" alt="${movie.title}"">` : ''}
                 `;
                 
-                divSearch.classList.add('containerSearchMovies')
+                
                 divSearch.appendChild(movieElement)
 
-                setTimeout(() => {
-                    boxSearch.appendChild(divSearch);
-                }, 2000)
+                
+                // apply interaction for exhibition details of movies
+                const movieHandleClick = document.getElementById(`movie_card_index_${movie.id}`)
+                movieHandleClick.addEventListener('click', ()=> {
+                    const displayArea = document.querySelector('.display_area');
+                    displayArea.classList.add(states.class_hidden);
+                    states.spinner.classList.remove(states.class_hidden);
+
+                    setTimeout(() => {
+                        states.spinner.classList.add(states.class_hidden);
+                        
+                        detailsMovies(movie.id);
+                    }, 2000)    
+                
+                })
+
+                
                 
             })
             
@@ -47,6 +65,8 @@ async function resultsSearch(searchItem){
     }
 
 }
+
+
 
 function stateElements(value){
     if(value === false){
@@ -66,6 +86,8 @@ function stateElements(value){
         p.style.display = 'none'
     }
 }
+
+
 
 // function for search movies.
 export function searchMovie(){
