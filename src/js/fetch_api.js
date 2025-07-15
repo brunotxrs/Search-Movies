@@ -188,16 +188,197 @@ async function fetchMovieDetails(movieId, language = 'pt-BR'){
     }
 }
 
+// -------------------------------------
+//             fetch Tv
+//-------------------------------------- 
+async function fetchApiTv() {
+    const urlApi = `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc`
+   
+    try {
+        const response = await fetch(urlApi, options);
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`)
+        }
+
+        const data = await response.json();
+        
+        return data;
+        
+    } catch (error) {
+        console.error('Error fetching data from API', error);
+        throw error;
+    }
+}
+
+const dataJsonTv = (async () => {
+    try {
+        const data = await fetchApiTv()
+        
+        return data
+        
+    } catch (error) {
+        console.error('Error fetching data from API', error);
+        return null; 
+    }
+})();
+// -------------------------------------
+// ----------------------------------
+
+// here for use genre of TV
+async function fetchGenreListTv(){
+    const genreListUrl = 'https://api.themoviedb.org/3/genre/tv/list?language=pt-BR';
+
+    try {
+        const response = await fetch(genreListUrl, options);
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`)
+        }
+
+        const data = await response.json();
+        
+        return data;
+        
+    } catch (error) {
+        console.error('Error fetching data from API', error);
+        throw error;
+    }
+}
+
+const tvDataGenreListJson = (async () => {
+    try {
+        const data = await fetchGenreListTv()
+        return data
+        
+    } catch (error) {
+        console.error('Error fetching data from API', error);
+        return null; 
+    }
+})()
+
+async function fetchTvCertification(tvId, countryCode = 'BR'){
+
+    const urlClassification = `https://api.themoviedb.org/3/tv/${tvId}/content_ratings`;
+
+    try {
+        const response = await fetch(urlClassification, options);
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`)
+        }
+
+        const data = await response.json()
+      
+        // Lógica para extrair a classificação específica para o Brasil
+       const brResult = data.results.find(result => result.iso_3166_1 === countryCode);
+        if (brResult) { // Para TV, a certificação está diretamente na propriedade 'rating'
+            return brResult.rating || ''; // Retorna a classificação ou ''
+        }
+        return ''; // Se não encontrar para o país
+        
+    } catch (error) {
+        console.error(`Error fetching certification for TV show ${tvId}:`, error);
+        return 'Erro ao carregar'; // Retorna um valor de erro
+    }
+}
+
+async function fetchTvByGenre(genreId, page = 1) {
+    const url = `https://api.themoviedb.org/3/discover/tv?with_genres=${genreId}&language=pt-BR&sort_by=popularity.desc&page=${page}`;
+
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        console.error(`Error fetching TV shows by genre ${genreId}:`, error);
+        throw error;
+    }
+}
+
+async function fetchTvDetails(tvId, language = 'pt-BR'){
+    
+    const urlDetails = `${BASE_URL}/tv/${tvId}?language=${language}&append_to_response=credits,content_ratings`;
+
+    try {
+        const response = await fetch(urlDetails, options);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+
+        const brCertification = data.content_ratings?.results.find(
+            result => result.iso_3166_1 === 'BR'
+        )?.rating || '';
+
+        data.brazil_certification = brCertification; // Adiciona ao objeto retornado
+
+        return data; // Retorna o objeto completo do filme
+
+
+        
+    } catch (error) {
+        console.error(`Erro ao buscar detalhes do tv ${tvId}:`, error);
+        throw error;
+    }
+}
+
+async function searchTv(query, page = 1) {
+    const urlSearch = `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(query)}&include_adult=false&language=pt-BR&page=${page}`;
+
+    try {
+        const response = await fetch(urlSearch, options);
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data  = await response.json()
+        return data
+
+    } catch (error) {
+        console.error(`Error searching TVs for "${query}":`, error);
+        throw error;
+    }
+
+}
 
 // -------------------------------------
-const genresPromise = dataGenreListJson;
 const jsonData = dataJson;
+const genresPromise = dataGenreListJson;
 
+const jsonDataTv = dataJsonTv
+const genrePromiseTv = tvDataGenreListJson
 export {
     jsonData,
     genresPromise,
     fetchMovieCertification,
     searchMovies,
     fetchMoviesByGenre,
-    fetchMovieDetails
+    fetchMovieDetails,
+
+
+    // ---------
+    //    TV
+    // ---------
+    jsonDataTv,
+    genrePromiseTv,
+    fetchTvCertification,
+    fetchTvByGenre,
+    fetchTvDetails,
+    searchTv
+
 }
