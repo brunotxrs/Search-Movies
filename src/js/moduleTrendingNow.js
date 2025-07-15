@@ -183,10 +183,14 @@ export async function trendingNow(filterType = 'all') {
 
             function handleDubleClick(){
                 const displayArea = document.querySelector('.display_area')
-                // displayArea.innerHTML = ''
                 displayArea.classList.add(states.class_hidden)
-                detailsMovies(carsId)
-                console.log(carsId)
+                states.spinner.classList.remove(states.class_hidden)
+                
+                setTimeout(() => {
+                    states.spinner.classList.add(states.class_hidden)
+                    
+                    detailsMovies(carsId)
+                }, 2000);
             }
 
         })
