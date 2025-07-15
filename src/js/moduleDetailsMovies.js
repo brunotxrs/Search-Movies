@@ -27,32 +27,35 @@ function createSVG(){
 };
 const elementSvg = createSVG();
 
-
-
-
-
+// function for back screens movies
 function backScreenMovies(){
     const btnBack = document.getElementById('btn_back')
     btnBack.addEventListener('click', ()=> {
+        sectionDetails.innerHTML = '';
+        sectionDetails.classList.add(states.class_hidden);
+        states.spinner.classList.remove(states.class_hidden);
 
-        const displayArea = document.querySelector('.display_area')
-        displayArea.classList.remove(states.class_hidden)
-        sectionDetails.innerHTML = ''
-        sectionDetails.classList.add(states.class_hidden)
-        console.log('debug CLICK')
+        setTimeout(() => {
+            states.spinner.classList.add(states.class_hidden);
+
+            const displayArea = document.querySelector('.display_area')
+            displayArea.classList.remove(states.class_hidden)
+                
+        }, 2000);
     })
 }
-
+// function for exhibition details of movie selected
 export async function detailsMovies(idMovie){
-    console.log(idMovie)
     
     try {
-        const movieDetails = await fetchMovieDetails(idMovie, 'BR');
+        const movieDetails = await fetchMovieDetails(idMovie, 'pt-BR');
         const imagePath = movieDetails.poster_path;
         const classifications = movieDetails.brazil_certification;
-        const genres = movieDetails.genres
-        const votes = movieDetails.vote_average.toFixed(1)
-
+        const genres = movieDetails.genres;
+        const votes = movieDetails.vote_average.toFixed(1);
+        const title = movieDetails.title;
+        const description = movieDetails.overview;
+        const authors = movieDetails.credits?.cast;
         
         const divImg = document.createElement('div');
         const imgMovie = document.createElement('img');
@@ -92,21 +95,65 @@ export async function detailsMovies(idMovie){
         divChildSecond.appendChild(spanChildDivSecond_1);
         divChildSecond.appendChild(spanChildDivSecond_2)
         divInfoMovie.appendChild(divChildSecond);
+        const titleAndDescription = document.createElement('div');
+        titleAndDescription.setAttribute('class', 'title_and_description');
+        const titleH2 = document.createElement('h2');
+        titleH2.innerHTML = `${title}`
+        titleAndDescription.appendChild(titleH2);
+        const pDescription = document.createElement('p');
+        pDescription.setAttribute('class', 'description_ellipsis')
+        pDescription.innerHTML = `${description}`;
+        titleAndDescription.appendChild(pDescription)
+        const more = document.createElement('span');
+        const less = document.createElement('span');
+        more.setAttribute('id', 'more');
+        less.setAttribute('id', 'less');
+        more.style.color = '#ff0000';
+        less.style.color = '#ff0000';
+        more.textContent = 'more';
+        less.textContent = 'less'
+        less.style.display = 'none'
+
+        titleAndDescription.appendChild(more);
+        titleAndDescription.appendChild(less);
         
-        
-        // títulos e atores
-        
-        
-        console.log('Debug - Detalhes do Filme:', movieDetails);
-        console.log('Título:', movieDetails.title);
-        console.log('Descrição:', movieDetails.overview);
-        console.log('Gêneros:', movieDetails.genres);
-        console.log('Atores:', movieDetails.credits?.cast);
-        console.log('Classificação BR:', movieDetails.brazil_certification);
+        more.addEventListener('click', () => {
+            pDescription.classList.remove('description_ellipsis');
+            more.style.display = 'none';
+            less.style.display = 'flex';    
+        });
+
+        less.addEventListener('click', () => {
+            pDescription.classList.add('description_ellipsis');
+            more.style.display = 'flex';
+            less.style.display = 'none';
+        });
+
+        const divAuthors = document.createElement('div');
+        divAuthors.setAttribute('class', 'authors_container');
+        const spanAuthors = document.createElement('span');
+        spanAuthors.textContent = 'Atores';
+        divAuthors.appendChild(spanAuthors);
+        const divBoxAuthors = document.createElement('div');
+        divBoxAuthors.setAttribute('class', 'box_authors');
+        authors.forEach(authors => {
+            const authorProfilePath = authors.profile_path;
+            const imgAuthors = document.createElement('img');
+            imgAuthors.src = `${TMDB_IMAGE_BASE_URL}${authorProfilePath}`;
+
+            if(authorProfilePath === null){
+                imgAuthors.style.display = 'none'
+            }
+
+            divBoxAuthors.appendChild(imgAuthors);
+        });
+        divAuthors.appendChild(divBoxAuthors);
 
         
         sectionDetails.appendChild(divImg);
-        sectionDetails.appendChild(divInfoMovie)
+        sectionDetails.appendChild(divInfoMovie);
+        sectionDetails.appendChild(titleAndDescription);
+        sectionDetails.appendChild(divAuthors)
         
         backScreenMovies();
     } catch (error) {
