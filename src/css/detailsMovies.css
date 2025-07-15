@@ -78,7 +78,7 @@
     		align-items: center;
             gap: 0.3125rem;
             padding: 0.3125rem;
-
+            z-index: 2
             
         }
 
