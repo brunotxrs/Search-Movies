@@ -39,7 +39,7 @@ function backScreenTv(){
 
         setTimeout(() => {
             states.spinner.classList.add(states.class_hidden);
-
+            document.body.classList.remove('bg_black')
             const displayArea = document.querySelector('.display_area')
             displayArea.classList.remove(states.class_hidden)
                 
