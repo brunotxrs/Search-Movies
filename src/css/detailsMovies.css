@@ -67,6 +67,8 @@
     	flex-direction: column;
     	align-items: center;
         background-color: #000;
+        z-index: 2;
+        margin-top: -1px;
 
         div:nth-child(1){
             display: flex;
@@ -223,13 +225,15 @@
 
             .ico_arrow_back {
                 position: absolute;
-                width: 1.875rem;
+                width: 3rem;
+                height: 3rem;
                 fill: var(--secondary);
                 top: 0.9375rem;
                 left: 0.625rem;
                 background: var(--primary);
                 border-radius: 0.3125rem;
-                z-index: 2;
+                z-index: 60;
+                cursor: pointer;
             }
 
             img {
@@ -237,7 +241,7 @@
                 height: 100%;
                 object-fit: cover;
                 display: block;
-                object-position: center;
+                object-position: top;
                 
             
             }
@@ -378,17 +382,21 @@
             span {
                 font-size: 1.5rem;
                 padding-left: 0.9375rem;
+                text-align: left;
             }
 
             .box_authors {
                 display: flex;
                 flex-direction: row;
+                max-width: 80rem;
                 width: 100vw;
                 overflow-x: scroll;
                 scrollbar-width: none;
                 gap: 0.625rem;
                 padding: 0.3125rem 0.625rem;
                 align-items: center;
+                margin: auto;
+                
 
                 img {
                     width: 6.25rem;
