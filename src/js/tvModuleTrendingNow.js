@@ -203,6 +203,7 @@ export async function trendingNowTv(filterType = 'all'){
                     setTimeout(() => {
                         states.spinner.classList.add(states.class_hidden)
                         
+                        document.body.classList.add('bg_black')
                         detailsTv(carsId)
                     }, 2000);
                 }

@@ -36,6 +36,7 @@ async function resultsSearch(searchItem){
                 
                 // apply interaction for exhibition details of TVs
                 const tvHandleClick = document.getElementById(`tv_card_index_${tv.id}`)
+
                 tvHandleClick.addEventListener('click', ()=> {
                     const displayArea = document.querySelector('.display_area');
                     displayArea.classList.add(states.class_hidden);
@@ -43,7 +44,7 @@ async function resultsSearch(searchItem){
 
                     setTimeout(() => {
                         states.spinner.classList.add(states.class_hidden);
-                        
+                        document.body.classList.add('bg_black');
                         detailsTv(tv.id);
                     }, 2000)    
                 
@@ -115,7 +116,7 @@ export function searchTVs(){
                 stateElements(true);
             }
 
-        }else if(inputValue.length === 0 && input_search.value.trim() === 0 || input_search.value.trim() === ''){
+        } else if(inputValue.length === 0 && input_search.value.trim() === 0 || input_search.value.trim() === ''){
             stateElements(true);
         }
 

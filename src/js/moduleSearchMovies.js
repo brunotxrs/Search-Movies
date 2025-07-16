@@ -41,7 +41,7 @@ async function resultsSearch(searchItem){
 
                     setTimeout(() => {
                         states.spinner.classList.add(states.class_hidden);
-                        
+                        document.body.classList.add('bg_black')
                         detailsMovies(movie.id);
                     }, 2000)    
                 

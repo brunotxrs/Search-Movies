@@ -188,7 +188,7 @@ export async function trendingNow(filterType = 'all') {
                 
                 setTimeout(() => {
                     states.spinner.classList.add(states.class_hidden)
-                    
+                    document.body.classList.add('bg_black')
                     detailsMovies(carsId)
                 }, 2000);
             }
