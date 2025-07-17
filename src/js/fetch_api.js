@@ -188,6 +188,33 @@ async function fetchMovieDetails(movieId, language = 'pt-BR'){
     }
 }
 
+// Função para buscar TRAILERS DE FILMES
+async function fetchMovieTrailers(movieId, language = 'pt-BR') {
+    try {
+        // A URL agora NÃO precisa do '?api_key=' pois a autenticação é via 'options'
+        const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?language=${language}`, options);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Filtra para encontrar o trailer oficial do YouTube
+        const trailers = data.results.filter(video => 
+            video.type === 'Trailer' && video.site === 'YouTube'
+        );
+
+        // Retorna o primeiro trailer encontrado, ou null se não houver
+        return trailers.length > 0 ? trailers[0] : null; 
+
+    } catch (error) {
+        console.error('Erro ao buscar trailers do filme:', error);
+        return null;
+    }
+}
+
+
 // -------------------------------------
 //             fetch Tv
 //-------------------------------------- 
@@ -369,6 +396,7 @@ export {
     searchMovies,
     fetchMoviesByGenre,
     fetchMovieDetails,
+    fetchMovieTrailers,
 
 
     // ---------
