@@ -383,6 +383,31 @@ async function searchTv(query, page = 1) {
 
 }
 
+// Função para buscar TRAILERS DE SÉRIES DE TV
+async function fetchTvTrailers(tvId, language = 'pt-BR') {
+    try {
+        // A URL agora NÃO precisa do '?api_key='
+        const response = await fetch(`${BASE_URL}/tv/${tvId}/videos?language=${language}`, options);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        const trailers = data.results.filter(video => 
+            video.type === 'Trailer' && video.site === 'YouTube'
+        );
+
+        return trailers.length > 0 ? trailers[0] : null;
+
+    } catch (error) {
+        console.error('Erro ao buscar trailers da série de TV:', error);
+        return null;
+    }
+}
+
+
 // -------------------------------------
 const jsonData = dataJson;
 const genresPromise = dataGenreListJson;
@@ -407,6 +432,7 @@ export {
     fetchTvCertification,
     fetchTvByGenre,
     fetchTvDetails,
-    searchTv
+    searchTv,
+    fetchTvTrailers
 
 }
