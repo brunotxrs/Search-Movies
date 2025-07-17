@@ -1,6 +1,7 @@
 import {  fetchTvDetails  } from './fetch_api.js';
-import { starIco, addBox, share, play } from './Icos.js';
+import { starIco, addBox, share, playTv } from './Icos.js';
 import { states } from './states.js';
+import {  trailerTV  } from './tvModuleTrailers.js';
 
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -26,16 +27,14 @@ function createSVG(){
 };
 const elementSvg = createSVG();
 
-
-// function for back screens movies
-
-// function for back screens movies
+// function for back screens TVs
 function backScreenTv(){
     const btnBack = document.getElementById('btn_back')
     btnBack.addEventListener('click', ()=> {
         sectionDetails.innerHTML = '';
         sectionDetails.classList.add(states.class_hidden);
         states.spinner.classList.remove(states.class_hidden);
+        
 
         setTimeout(() => {
             states.spinner.classList.add(states.class_hidden);
@@ -62,11 +61,12 @@ export async function detailsTv(idTv){
         
         const divImg = document.createElement('div');
         const imgMovie = document.createElement('img');
+        imgMovie.setAttribute('id', 'imageMovie')
         divImg.setAttribute('class', 'box-img');
         imgMovie.src = `${TMDB_IMAGE_BASE_URL}${imagePath}`;
         divImg.appendChild(elementSvg)
         divImg.appendChild(imgMovie)
-        divImg.innerHTML += `${play}`
+        divImg.innerHTML += `${playTv}`
         
         
         const divInfoTv = document.createElement('div');
@@ -152,13 +152,29 @@ export async function detailsTv(idTv){
         });
         divAuthors.appendChild(divBoxAuthors);
 
-        
+        // clean 
+        sectionDetails.innerHTML = ''  
+
+        // apply elements 
         sectionDetails.appendChild(divImg);
         sectionDetails.appendChild(divInfoTv);
         sectionDetails.appendChild(titleAndDescription);
         sectionDetails.appendChild(divAuthors)
         
         backScreenTv();
+        
+        
+        const btnPlayTv = document.getElementById('play_tv_trailers');
+        btnPlayTv.addEventListener('click', ()=> {
+            
+            btnPlayTv.style.display = 'none'
+            // call function for view trailers 
+            trailerTV(idTv)
+                        
+        })
+
+
+
     } catch (error) {
         console.error('Erro ao buscar detalhes do Tv:', error);
     }
