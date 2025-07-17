@@ -68,7 +68,7 @@
     	align-items: center;
         background-color: #000;
         z-index: 2;
-        margin-top: -1px;
+        margin-top: -0.0625rem;
 
         div:nth-child(1){
             display: flex;
@@ -204,7 +204,7 @@
 
 }
 
-@media screen and (orientation: landscape ) {
+@media screen and (orientation: landscape ) and (max-height: 28.125rem) {
     #detailsMovies, #detailsTv {
         .box-img {
             height: 100vh;
