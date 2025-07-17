@@ -59,8 +59,6 @@ export async function moviePoster(){
     p.appendChild(imagePoster)
     p.appendChild(elementSvg)
 
-    console.log('debug id', idForTrailer)
-
 
     const playMovie = document.getElementById('play_trailers')
     playMovie.addEventListener('click', () => {
