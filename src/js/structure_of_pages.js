@@ -1,6 +1,6 @@
 import {  states  } from './states.js';
 
-const nameUser = localStorage.getItem('name_Actual');
+const nameUser = localStorage.getItem('nameUser');
 
 export function structureOfPages() {
     states.spinner.classList.remove(states.class_hidden)
