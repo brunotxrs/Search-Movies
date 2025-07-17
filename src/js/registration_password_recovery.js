@@ -22,7 +22,7 @@ function structureHtml(i){
 
                     <label for="rpr_email" class="label">
                         <svg class="email" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
-                        <input type="email" name="" placeholder="E-mail" id="rpr_email" class="input">
+                        <input type="email" name="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="E-mail" id="rpr_email" class="input">
                     </label>
                 </div>
 
@@ -65,15 +65,159 @@ function structureHtml(i){
 }
 
 function register(r){
+    
 
     // criar logica para autenticação dos dados do input
 
     if(r === 'register'){
         const title = 'cadastro'
         structureHtml(title)
+        
+        const nameUser = document.getElementById('rpr_name')
+        const emailUser = document.getElementById('rpr_email')
+        const i_password = document.getElementById('rpr_password_first');
+        const ico_off = document.getElementById('rpr_first_ico_off');
+        const ico_on = document.getElementById('rpr_first_ico_on');
 
+        const passwordSecond = document.getElementById('rpr_password_second');
+        const icoOffSecond = document.getElementById('rpr_second_ico_off');
+        const icoOnSecond = document.getElementById('rpr_second_ico_on');
+        const i_button_rpr = document.getElementById('i_button_rpr')
+        
+        
+        if (!i_password || !passwordSecond || !i_button_rpr || !nameUser || !emailUser) {
+            console.error("Erro: Um ou mais elementos do formulário não foram encontrados no DOM após a renderização.");
+            return; // Saia da função se os elementos essenciais não forem encontrados
+        }
+        
+        const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+        
+        // here  call area of movies
+        if(i_button_rpr){
+            i_button_rpr.addEventListener('click', (event) => {
+                event.preventDefault();
+                const minLength = 3;
+                const valuePasswordFist = i_password.value.trim()
+                const valuePasswordSecond = passwordSecond.value.trim()
+                const valueNameUser = nameUser.value.trim()
+                const valueEmailUser = emailUser.value.trim()
+
+                const msgError = document.querySelector('.msg_error');
+
+                if(valueNameUser === ''){
+                    if(msgError){
+                        msgError.textContent = 'Campo UserName vazio'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(valueEmailUser === ''){
+                    if(msgError){
+                        msgError.textContent = 'Campo E-mail vazio'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(valuePasswordFist === ''){
+                    if(msgError){
+                        msgError.textContent = 'O primeiro campo password vazio'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(valuePasswordSecond === ''){
+                    if(msgError){
+                        msgError.textContent = 'O segundo campo password vazio'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(valuePasswordFist.length < minLength && valuePasswordSecond.length < minLength){
+                    if(msgError){
+                        msgError.textContent = 'A senha deve ter mais de 3 caracteres'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(valuePasswordFist !== valuePasswordSecond){
+                    if(msgError){
+                        msgError.textContent = 'As senhas sao diferentes'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else if(!emailRegex.test(valueEmailUser)){
+                    if(msgError){
+                        msgError.textContent = 'Por favor, insira um e-mail válido (ex: nome@dominio.com).'
+
+                        setTimeout(() => {
+                            msgError.textContent = ''
+                        }, 2000);
+
+                    }
+                } else {
+                    window.location.href = moviesPage;
+                    localStorage.setItem('nameUser', valueNameUser)
+                    localStorage.setItem('password', valuePasswordFist)
+                }
+            })
+
+        }
+
+        
+        ico_off.addEventListener('click', ()=> {
+            ico_off.classList.add(states.class_hidden)
+            ico_on.classList.remove(states.class_hidden)
+            const type = i_password.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            i_password.setAttribute('type', type);
+        })
+
+        ico_on.addEventListener('click', ()=> {
+            ico_on.classList.add(states.class_hidden)
+            ico_off.classList.remove(states.class_hidden)
+            const type = i_password.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            i_password.setAttribute('type', type);
+        })
+
+
+        icoOffSecond.addEventListener('click', ()=> {
+            icoOffSecond.classList.add(states.class_hidden)
+            icoOnSecond.classList.remove(states.class_hidden)
+            const type = passwordSecond.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            passwordSecond.setAttribute('type', type);
+        })
+
+        icoOnSecond.addEventListener('click', ()=> {
+            icoOnSecond.classList.add(states.class_hidden)
+            icoOffSecond.classList.remove(states.class_hidden)
+            const type = passwordSecond.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            passwordSecond.setAttribute('type', type);
+        })
+
+        
+        
+
+
+        // go page login
         const btnLogin = document.getElementById('i_btn');   
         btnLogin.addEventListener('click', () => {
+
             states.registration_password_recovery.innerHTML = ''
             states.spinner.classList.remove(states.class_hidden)
             states.registration_password_recovery.classList.add(states.class_hidden)
@@ -86,13 +230,7 @@ function register(r){
         })
 
 
-        // here  call area of movies
-        const i_button_rpr = document.getElementById('i_button_rpr')
-        i_button_rpr.addEventListener('click', () => {
-            window.location.href = moviesPage
-
-        })
-
+    
         
     }
 }
