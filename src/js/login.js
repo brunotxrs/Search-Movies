@@ -78,7 +78,6 @@ function cleanLoginHtmlAndAddSpinner(){
 
 function pageLogin(){
     states.login.classList.remove(states.class_hidden);
-    var nomeAtual = '';
     const ico_close = document.getElementById('ico_close');
     const ico_open = document.getElementById('ico_open');
     const i_name = document.getElementById('i_name');
@@ -121,27 +120,24 @@ function pageLogin(){
     }
 
     i_button_login.addEventListener('click', () => {
+        const nameUser = localStorage.getItem('nameUser');
+        const passwordUser = localStorage.getItem('password');
 
-        const minLength = 3;
         const valueInputName = i_name.value.trim();
         const valueInputPassword = i_password.value.trim();
 
-        
-        if(i_name.value.trim() === ''){
-            msg_error.textContent = 'O campo Username esta em branco.'
-            cleanMsg(msg_error);
-            
-        } else if (valueInputName.length <= minLength){
-            msg_error.textContent = `O nome deve conter mais de ${minLength} caracteres`
-            cleanMsg(msg_error);
+        if(valueInputName != nameUser){
+            if(msg_error){
+                msg_error.textContent = 'Usuario incorreto'
 
-        } else if(i_password.value.trim() === ''){
-            msg_error.textContent = 'O campo Password esta em branco.'
-            cleanMsg(msg_error);
+                cleanMsg(msg_error);
+            }
+        } else if(valueInputPassword != passwordUser){
+            if(msg_error){
+                msg_error.textContent = 'Senha incorreta'
 
-        } else if(valueInputPassword.length <= minLength){
-            msg_error.textContent = `O Password deve conter mais de ${minLength} caracteres`
-            cleanMsg(msg_error);
+                cleanMsg(msg_error);
+            }
 
         } else {
 
@@ -150,21 +146,12 @@ function pageLogin(){
 
             setTimeout(() => {
                 // if has problem with spinner add the state.spinner here
-                                
-                nomeAtual = i_name.value.trim();
-                if(nomeAtual != ''){
-                    // saving name of user
-                    localStorage.setItem('name_Actual', nomeAtual);
-                    
-                }
 
                 // call here page for movies and others
                 window.location.href = moviesPage
-                
 
-                return nomeAtual
             }, 2000)
-            
+
         }
         
     })
