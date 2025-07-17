@@ -1,5 +1,6 @@
 import { fetchMovieDetails  } from './fetch_api.js';
 import { starIco, addBox, share, play } from './Icos.js';
+import { trailersMovies } from './moduleTrailersMovies.js';
 
 import { states } from './states.js';
 
@@ -36,6 +37,7 @@ function backScreenMovies(){
         states.spinner.classList.remove(states.class_hidden);
 
         setTimeout(() => {
+            sectionDetails.innerHTML = '';
             states.spinner.classList.add(states.class_hidden);
             document.body.classList.remove('bg_black')
             const displayArea = document.querySelector('.display_area')
@@ -46,6 +48,7 @@ function backScreenMovies(){
 }
 // function for exhibition details of movie selected
 export async function detailsMovies(idMovie){
+    
     
     try {
         const movieDetails = await fetchMovieDetails(idMovie, 'pt-BR');
@@ -59,7 +62,9 @@ export async function detailsMovies(idMovie){
         
         const divImg = document.createElement('div');
         const imgMovie = document.createElement('img');
+        imgMovie.setAttribute('id', 'imageMovie')
         divImg.setAttribute('class', 'box-img');
+        divImg.setAttribute('id', 'box_trailers')
         imgMovie.src = `${TMDB_IMAGE_BASE_URL}${imagePath}`;
         divImg.appendChild(elementSvg)
         divImg.appendChild(imgMovie)
@@ -149,13 +154,23 @@ export async function detailsMovies(idMovie){
         });
         divAuthors.appendChild(divBoxAuthors);
 
-        
+        // clean 
+        sectionDetails.innerHTML = ''   
+        // apply elements 
         sectionDetails.appendChild(divImg);
         sectionDetails.appendChild(divInfoMovie);
         sectionDetails.appendChild(titleAndDescription);
         sectionDetails.appendChild(divAuthors)
         
         backScreenMovies();
+
+        const playMovie = document.getElementById('play')
+        playMovie.addEventListener('click', () => {
+            playMovie.style.display = 'none'
+            // call function for view trailers 
+            trailersMovies(idMovie)
+            
+        })
 
     } catch (error) {
         console.error('Erro ao buscar detalhes do filme:', error);

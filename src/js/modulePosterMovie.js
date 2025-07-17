@@ -1,5 +1,6 @@
 import {  structureOfPages  } from './structure_of_pages.js';
 import {  jsonData,} from './fetch_api.js';
+import {  trailersForPoster  } from './moduleTrailersMovies.js';
 
 // for recept all promises 
 async function datas(){
@@ -15,6 +16,7 @@ function createSVG(){
     const urlSvg = `http://www.w3.org/2000/svg`;
     const svgPoster = document.createElementNS(urlSvg, 'svg');
     svgPoster.setAttribute('class', 'ico_play');
+    svgPoster.setAttribute('id', 'play_trailers')
     svgPoster.setAttribute('xmlns', urlSvg);
     svgPoster.setAttribute('viewBox', '0 0 384 512');
     
@@ -32,16 +34,22 @@ export async function moviePoster(){
 
     const moviesResults = await datas()
 
+    
     const p = document.getElementById('i_p')
     p.innerHTML = ''
+
     const imagePoster = document.createElement('img')
 
     const moviesWithPosters = moviesResults.filter(movie => movie.poster_path);
     const originalTitle = moviesResults.filter(title => title.original_title);
+    const movieId = moviesResults.filter(idMovie => idMovie.id)
     const randomIndex = Math.floor(Math.random() * moviesResults.length);
+
 
     const randomMovie = moviesWithPosters[randomIndex];
     const randomTitle = originalTitle[randomIndex];
+    const idMovie = movieId[randomIndex]
+    const idForTrailer = idMovie.id
     const movieTitle = randomTitle.original_title;
     const imagePath = randomMovie.poster_path;
     const imageUrl = `https://image.tmdb.org/t/p/w500${imagePath}`;
@@ -50,6 +58,18 @@ export async function moviePoster(){
     imagePoster.alt = `${movieTitle}`
     p.appendChild(imagePoster)
     p.appendChild(elementSvg)
+
+    console.log('debug id', idForTrailer)
+
+
+    const playMovie = document.getElementById('play_trailers')
+    playMovie.addEventListener('click', () => {
+        playMovie.style.display = 'none'
+        // call function for view trailers 
+        trailersForPoster(idForTrailer)
+        
+        
+    })
     
 }
 
