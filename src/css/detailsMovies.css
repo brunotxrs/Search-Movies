@@ -204,6 +204,14 @@
 
 }
 
+@media screen and (orientation: landscape ) {
+    #detailsMovies, #detailsTv {
+        .box-img {
+            height: 100vh;
+        }
+    }
+}
+
 @media screen and (width > 48rem) {
     #detailsMovies, #detailsTv {
         position: relative;
