@@ -32,12 +32,14 @@ export async function trailerTV(idTv) {
             if (boxMovie) {
                 // boxMovie.innerHTML = '';
                 const iframe = document.createElement('iframe');
+                iframe.src = 'about:blank'
                 iframe.src = youtubeEmbedUrl;
                 iframe.width = "100%";
                 iframe.height = "100%";
                 iframe.setAttribute("frameborder", "0");
                 iframe.setAttribute("allowfullscreen", "");
                 iframe.setAttribute("allow", "autoplay; encrypted-media");
+                iframe.setAttribute('id', 'first_iframe_tv')
                 
                 boxMovie.appendChild(iframe);
             } else {
@@ -71,7 +73,7 @@ export async function posterTrailerTV(idTv) {
     
     try {
         const trailerTv = await fetchTvTrailers(idTv, 'pt-BR');
-        const posterTrailer = document.querySelector('.coming_soon');
+        const posterTrailer = document.getElementById('area_of_trailers')
 
         if (trailerTv) {
             
@@ -95,15 +97,17 @@ export async function posterTrailerTV(idTv) {
             }
 
             if (posterTrailer) {
-                // posterTrailer.innerHTML = '';
+                posterTrailer.innerHTML = '';
                 const iframe = document.createElement('iframe');
+                iframe.src = 'about:blank'
                 iframe.src = youtubeEmbedUrl;
                 iframe.width = "100%";
                 iframe.height = "100%";
                 iframe.setAttribute("frameborder", "0");
                 iframe.setAttribute("allowfullscreen", "");
                 iframe.setAttribute("allow", "autoplay; encrypted-media");
-                
+                iframe.setAttribute('id', 'iframe_tv');
+
                 posterTrailer.appendChild(iframe);
             } else {
                 console.warn("Elemento '.box-img' não encontrado para exibir o trailer da série.");

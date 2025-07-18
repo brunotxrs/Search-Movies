@@ -8,7 +8,6 @@ export async function trailersMovies(idMovies) {
         const trailerMovie = await fetchMovieTrailers(idMovies, 'pt-BR');
         const boxMovie = document.querySelector('.box-img');
         
-        
         if (trailerMovie) {
             
             // A 'key' ID do vídeo no YouTube.
@@ -25,12 +24,14 @@ export async function trailersMovies(idMovies) {
 
             if (boxMovie) {
                 const iframe = document.createElement('iframe');
+                iframe.src = ''
                 iframe.src = youtubeEmbedUrl;
                 iframe.width = "100%";
                 iframe.height = "100%";
                 iframe.setAttribute("frameborder", "0");
                 iframe.setAttribute("allowfullscreen", "");
                 iframe.setAttribute("allow", "autoplay; encrypted-media");
+                iframe.setAttribute('id', 'first_iframe_movie')
                 
                 boxMovie.appendChild(iframe);
             }
@@ -57,7 +58,7 @@ export async function trailersForPoster(idMovies) {
     
     try {
         const trailerMovie = await fetchMovieTrailers(idMovies, 'pt-BR');
-        const posterTrailer = document.querySelector('.coming_soon')
+        const posterTrailer = document.getElementById('area_of_trailers')
         
         
         if (trailerMovie) {
@@ -75,7 +76,9 @@ export async function trailersForPoster(idMovies) {
             imageMovie.style.display = 'none'
 
             if(posterTrailer){
+                posterTrailer.innerHTML = ''
                 const iframe = document.createElement('iframe');
+                iframe.src = ''
                 iframe.src = youtubeEmbedUrl;
                 iframe.width = "100%";
                 iframe.height = "100%";
