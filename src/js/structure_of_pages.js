@@ -44,6 +44,8 @@ export function structureOfPages() {
 
                     <figure class="poster" id="i_p">
                     </figure>
+
+                    <div id="area_of_trailers"></div>
                 </div>
                 
                 <div class="types_type">                   
@@ -61,7 +63,6 @@ export function structureOfPages() {
             <div class="selection_types" id='types_selections'>
                 <span id="movies_selection">Filmes</span>
                 <span id="series_selection">Series</span>
-                <span id="my_list">Minha Lista</span>
             </div>
 
         </div>
