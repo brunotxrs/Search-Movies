@@ -1,6 +1,5 @@
 import {  fetchTvDetails  } from './fetch_api.js';
 import { starIco, addBox, share, playTv } from './Icos.js';
-import { states } from './states.js';
 import {  trailerTV  } from './tvModuleTrailers.js';
 
 
@@ -31,18 +30,7 @@ const elementSvg = createSVG();
 function backScreenTv(){
     const btnBack = document.getElementById('btn_back')
     btnBack.addEventListener('click', ()=> {
-        sectionDetails.innerHTML = '';
-        sectionDetails.classList.add(states.class_hidden);
-        states.spinner.classList.remove(states.class_hidden);
-        
-
-        setTimeout(() => {
-            states.spinner.classList.add(states.class_hidden);
-            document.body.classList.remove('bg_black')
-            const displayArea = document.querySelector('.display_area')
-            displayArea.classList.remove(states.class_hidden)
-                
-        }, 2000);
+        location.reload()
     })
 }
 

@@ -2,8 +2,6 @@ import { fetchMovieDetails  } from './fetch_api.js';
 import { starIco, addBox, share, play } from './Icos.js';
 import { trailersMovies } from './moduleTrailersMovies.js';
 
-import { states } from './states.js';
-
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const sectionDetails = document.createElement('section');
@@ -32,18 +30,8 @@ const elementSvg = createSVG();
 function backScreenMovies(){
     const btnBack = document.getElementById('btn_back')
     btnBack.addEventListener('click', ()=> {
-        sectionDetails.innerHTML = '';
-        sectionDetails.classList.add(states.class_hidden);
-        states.spinner.classList.remove(states.class_hidden);
-
-        setTimeout(() => {
-            sectionDetails.innerHTML = '';
-            states.spinner.classList.add(states.class_hidden);
-            document.body.classList.remove('bg_black')
-            const displayArea = document.querySelector('.display_area')
-            displayArea.classList.remove(states.class_hidden)
-                
-        }, 2000);
+        location.reload()
+        
     })
 }
 // function for exhibition details of movie selected
