@@ -183,12 +183,10 @@ export async function trendingNow(filterType = 'all') {
             // has elements to clean
             function handleDubleClick(){
                 const displayArea = document.querySelector('.display_area');
-                const comingSoon = document.querySelector('.coming_soon');
                 const iframePoster = document.getElementById('area_of_trailers');
-                
+
                 iframePoster.innerHTML = ''
-                comingSoon.innerHTML = ''
-                displayArea.innerHTML = ''
+                displayArea.classList.add(states.class_hidden)
 
                 states.spinner.classList.remove(states.class_hidden);                
 

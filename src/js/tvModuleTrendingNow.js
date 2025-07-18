@@ -197,15 +197,11 @@ export async function trendingNowTv(filterType = 'all'){
     
                 function handleDubleClick(){
                     const displayArea = document.querySelector('.display_area')
-                    const comingSoon = document.querySelector('.coming_soon');
                     const iframePoster = document.getElementById('area_of_trailers');
-                    displayArea.innerHTML = ''
-                    
-                    iframePoster.innerHTML = ''
-                    comingSoon.innerHTML = ''
-                    displayArea.innerHTML = ''
-                    
-                    states.spinner.classList.remove(states.class_hidden)
+                
+                    iframePoster.innerHTML = '';
+                    displayArea.classList.add(states.class_hidden);
+                    states.spinner.classList.remove(states.class_hidden);
                     
                     setTimeout(() => {
                         states.spinner.classList.add(states.class_hidden)
