@@ -185,14 +185,14 @@ export async function trendingNowTv(filterType = 'all'){
     
                 cardsHandleClick.onclick = function(){
                     handleClick()
+
+                    cardsHandleClick.addEventListener('click', ()=> {
+                        handleDubleClick()
+                    })
                 }
     
                 function handleClick(){
                     cardsHandleClick.classList.add('card_principal')
-                }
-    
-                cardsHandleClick.ondblclick = function(){
-                    handleDubleClick()
                 }
     
                 function handleDubleClick(){
