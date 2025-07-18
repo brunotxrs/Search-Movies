@@ -167,18 +167,17 @@ export async function trendingNow(filterType = 'all') {
             const cardsHandleClick = document.getElementById(`card_id_${i}`)
             const carsId = e.id
             
-            
-
             cardsHandleClick.onclick = function(){
                 handleClick()
+
+                cardsHandleClick.addEventListener('click', ()=> {
+                    handleDubleClick()
+                })
+
             }
 
             function handleClick(){
                 cardsHandleClick.classList.add('card_principal')
-            }
-
-            cardsHandleClick.ondblclick = function(){
-                handleDubleClick()
             }
 
             // has elements to clean
