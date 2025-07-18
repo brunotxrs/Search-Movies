@@ -103,6 +103,14 @@ export function searchTVs(){
                 divSearch.innerHTML = ''
                 stateElements(false)
 
+                // function here
+                const posterTrailer = document.getElementById('area_of_trailers')
+                posterTrailer.innerHTML = ''
+                const imgPoster = document.getElementById('i_p')
+                imgPoster.style.display = 'flex'
+                const playTrailers = document.getElementById('play') 
+                playTrailers.style.display = 'flex'
+
                 setTimeout(() => {
                     states.spinner.classList.add(states.class_hidden)
 
