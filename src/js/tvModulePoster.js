@@ -34,17 +34,16 @@ export async function tvModulePoster(){
     const imageUrl = `https://image.tmdb.org/t/p/w500${imagePath}`;
 
     imagePoster.src = `${imageUrl}`;
-    imagePoster.alt = `${tvTitle}`
+    imagePoster.alt = `${tvTitle}`;
     posterArea.appendChild(imagePoster);
-    posterArea.innerHTML += `${play}`
+    posterArea.innerHTML += `${play}`;
 
 
-    const playTrailers = document.getElementById('play') 
-    playTrailers.style.display = 'flex'
 
-    const playMovie = document.getElementById('play')
-    playMovie.addEventListener('click', () => {
-        playMovie.style.display = 'none'
+    const playTrailers = document.getElementById('play'); 
+    playTrailers.style.display = 'flex';
+    playTrailers.addEventListener('click', () => {
+        playTrailers.style.display = 'none'
         // call function for view trailers 
         posterTrailerTV(idForTrailer)
         
