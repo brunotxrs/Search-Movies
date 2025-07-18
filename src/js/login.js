@@ -128,7 +128,7 @@ function pageLogin(){
 
         if(valueInputName != nameUser){
             if(msg_error){
-                msg_error.textContent = 'Usuario incorreto'
+                msg_error.textContent = 'Usuário não encontrado'
 
                 cleanMsg(msg_error);
             }

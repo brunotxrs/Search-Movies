@@ -142,7 +142,7 @@ function register(r){
                     }
                 } else if(valuePasswordFist.length < minLength && valuePasswordSecond.length < minLength){
                     if(msgError){
-                        msgError.textContent = 'A senha deve ter mais de 3 caracteres'
+                        msgError.textContent = 'A senha deve ter mais de 3 caracteres!';
 
                         setTimeout(() => {
                             msgError.textContent = ''
@@ -151,7 +151,7 @@ function register(r){
                     }
                 } else if(valuePasswordFist !== valuePasswordSecond){
                     if(msgError){
-                        msgError.textContent = 'As senhas sao diferentes'
+                        msgError.textContent = 'As senhas não conferem. Por favor, verifique.';
 
                         setTimeout(() => {
                             msgError.textContent = ''

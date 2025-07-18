@@ -42,7 +42,7 @@ export async function trailersMovies(idMovies) {
         if(trailerMovie === null){
 
             const pInfo = document.createElement('p');
-            pInfo.textContent = 'Sorry no have Trailers';
+            pInfo.textContent = 'No trailers found.';
             pInfo.classList.add('info_no_trailers')
             boxMovie.appendChild(pInfo)
 
@@ -98,7 +98,7 @@ export async function trailersForPoster(idMovies) {
         if(trailerMovie === null){
 
             const pInfo = document.createElement('p');
-            pInfo.textContent = 'Sorry no have Trailers';
+            pInfo.textContent = 'No trailers found.';
             pInfo.classList.add('info_no_trailers')
             posterTrailer.appendChild(pInfo)
 
