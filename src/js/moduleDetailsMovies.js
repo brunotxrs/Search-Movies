@@ -1,6 +1,7 @@
 import { fetchMovieDetails  } from './fetch_api.js';
 import { starIco, addBox, share, play } from './Icos.js';
 import { trailersMovies } from './moduleTrailersMovies.js';
+import { states } from './states.js';
 
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -28,9 +29,27 @@ const elementSvg = createSVG();
 
 // function for back screens movies
 function backScreenMovies(){
-    const btnBack = document.getElementById('btn_back')
+    const btnBack = document.getElementById('btn_back');
+    const displayArea = document.querySelector('.display_area');
+    const posterBox = document.getElementById('i_p');
+    const playMovie = document.getElementById('play_trailers');
+    
     btnBack.addEventListener('click', ()=> {
-        location.reload()
+        sectionDetails.innerHTML = '';
+        sectionDetails.classList.add(states.class_hidden);
+        states.spinner.classList.remove(states.class_hidden);
+
+        setTimeout(() => {
+            sectionDetails.innerHTML = '';
+            states.spinner.classList.add(states.class_hidden);
+            document.body.classList.remove('bg_black');
+            displayArea.classList.remove(states.class_hidden);
+            if(posterBox){
+                posterBox.style.display = 'flex';
+                playMovie.style.display = 'flex';
+            }
+                
+        }, 2000);
         
     })
 }
