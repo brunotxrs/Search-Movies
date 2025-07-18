@@ -59,7 +59,9 @@ export async function moviePoster(){
     p.appendChild(imagePoster)
     p.appendChild(elementSvg)
 
-
+    const playTrailers = document.getElementById('play_trailers') 
+    playTrailers.style.display = 'flex'
+    
     const playMovie = document.getElementById('play_trailers')
     playMovie.addEventListener('click', () => {
         playMovie.style.display = 'none'

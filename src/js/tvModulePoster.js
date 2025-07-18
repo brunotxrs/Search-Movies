@@ -38,6 +38,10 @@ export async function tvModulePoster(){
     posterArea.appendChild(imagePoster);
     posterArea.innerHTML += `${play}`
 
+
+    const playTrailers = document.getElementById('play') 
+    playTrailers.style.display = 'flex'
+
     const playMovie = document.getElementById('play')
     playMovie.addEventListener('click', () => {
         playMovie.style.display = 'none'
