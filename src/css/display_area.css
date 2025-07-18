@@ -249,12 +249,13 @@
         flex-direction: column;
         align-items: center;
 
-        .poster {
-            width: initial;
-        }
-
         iframe {
             height: 100vh;
+        }
+
+        #area_of_trailers > .info_no_trailers {
+            top: 30%;
+            left: 0;
         }
 
         
@@ -375,11 +376,17 @@
                     }
                 }
 
-                iframe {
-                    min-width: 48rem;
-                    max-width: 80rem;
-                    height: 100vh;
+                #area_of_trailers {
+                    
+                    text-align: center;
+
+                    iframe {
+                        width: 50vw;
+                        max-width: 80rem;
+                        height: 50vh;
+                    }
                 }
+
             }
 
 
